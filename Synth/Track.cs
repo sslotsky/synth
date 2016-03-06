@@ -8,14 +8,12 @@ namespace Synth
 {
     public class Track : ReceiveActor
     {
-        private int instrument;
-
-        private int channel { get { return instrument == 1 ? AudioHub.SaxChannel : AudioHub.KeyboardChannel; } }
+        private Instrument instrument;
         private Song song;
 
         private List<Beat> beats;
 
-        public Track(Song song, int instrument, List<Note> notes)
+        public Track(Song song, Instrument instrument, List<Note> notes)
         {
             this.song = song;
             this.instrument = instrument;
@@ -26,7 +24,7 @@ namespace Synth
         public void Stream(AudioHub hub)
         {
             var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
-            var musician = song.NewMusician(hub, channel);
+            var musician = song.NewMusician(hub, instrument);
 
             foreach (var beat in beats)
             {

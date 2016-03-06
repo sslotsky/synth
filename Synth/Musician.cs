@@ -9,11 +9,12 @@ namespace Synth
     {
         private int beatTime;
         private AudioHub hub;
-        private int channel;
-        public Musician(Song song, AudioHub hub, int channel)
+        private Instrument instrument;
+
+        public Musician(Song song, AudioHub hub, Instrument instrument)
         {
             beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
-            this.channel = channel;
+            this.instrument = instrument;
             this.hub = hub;
             Receive<Beat>(beat => Play(beat.Notes));
         }
@@ -31,9 +32,9 @@ namespace Synth
                 }
                 else
                 {
-                    hub.Play(note.Pitch, channel);
+                    hub.Play(note.Pitch, instrument);
                     Thread.Sleep(getDuration(note));
-                    hub.Stop(note.Pitch, channel);
+                    hub.Stop(note.Pitch, instrument);
                 }
             }
         }

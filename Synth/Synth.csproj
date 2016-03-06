@@ -57,6 +57,7 @@
     <Compile Include="Beat.cs" />
     <Compile Include="BeatFiller.cs" />
     <Compile Include="Flat.cs" />
+    <Compile Include="Instrument.cs" />
     <Compile Include="Musician.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="NoteName.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Sharp.cs" />
     <Compile Include="Song.cs" />
     <Compile Include="Speaker.cs" />
+    <Compile Include="Synthesizer.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

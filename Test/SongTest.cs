@@ -28,7 +28,7 @@ namespace Test
                     new Note(NoteName.E, 1),
                     new Note(NoteName.E, 2)
                 };
-                song.AddTrack(0, notes);
+                song.AddTrack(Instrument.Vibes, notes);
 
                 var otherNotes = new List<Note>
                 {
@@ -36,7 +36,7 @@ namespace Test
                     new Note(NoteName.A, 2).OctaveUp,
                     new Note(NoteName.G, 4)
                 };
-                song.AddTrack(1, otherNotes);
+                song.AddTrack(Instrument.TenorSax, otherNotes);
 
                 var numBeats = 8;
                 var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
@@ -58,7 +58,7 @@ namespace Test
                     new Note(NoteName.Rest, 1),
                     new Note(NoteName.C, 4),
                 };
-                song.AddTrack(0, notes);
+                song.AddTrack(Instrument.Flute, notes);
 
                 var numBeats = 8;
                 var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
@@ -81,7 +81,7 @@ namespace Test
                     new Note(NoteName.E, (Rational)1/4),
                     new Note(NoteName.E, (Rational)1/2)
                 };
-                song.AddTrack(0, notes);
+                song.AddTrack(Instrument.Trumpet, notes);
 
                 var numBeats = 5;
                 var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));

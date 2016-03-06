@@ -18,14 +18,14 @@ namespace Synth
             tracks = new List<IActorRef>();
         }
 
-        public void AddTrack(int instrument, List<Note> notes)
+        public void AddTrack(Instrument instrument, List<Note> notes)
         {
             tracks.Add(song.ActorOf(Props.Create(() => new Track(this, instrument, notes))));
         }
 
-        public IActorRef NewMusician(AudioHub hub, int channel)
+        public IActorRef NewMusician(AudioHub hub, Instrument instrument)
         {
-            return song.ActorOf(Props.Create(() => new Musician(this, hub, channel)));
+            return song.ActorOf(Props.Create(() => new Musician(this, hub, instrument)));
         }
 
         public void Play(AudioHub hub)

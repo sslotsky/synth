@@ -1,32 +1,45 @@
 ﻿using Akka.Actor;
 using NAudio.Midi;
 using System;
+using System.Collections.Generic;
 
 namespace Synth
 {
     public class AudioHub : IDisposable
     {
-        public static int KeyboardChannel = 1;
-        public static int SaxChannel = 2;
+        private static Dictionary<Instrument, int> channels = new Dictionary<Instrument, int>
+        {
+            { Instrument.Choir, 1 },
+            { Instrument.Flute, 2 },
+            { Instrument.JazzGuitar, 3 },
+            { Instrument.Organ, 4 },
+            { Instrument.Piano, 5 },
+            { Instrument.SlapBass, 6 },
+            { Instrument.TenorSax, 7 },
+            { Instrument.Trumpet, 8 },
+            { Instrument.Vibes, 9 }
+        };
 
-        private MidiOut output;
+        private Synthesizer synth;
+
         public ActorSystem Speakers { get; private set; }
 
         public AudioHub()
         {
-            output = new MidiOut(0);
-            output.Send(MidiMessage.ChangePatch(66, 2).RawData);
             Speakers = ActorSystem.Create("speakers");
+            synth = new Synthesizer();
+            foreach (var channel in channels)
+                synth.SetVoice(channel.Value, (int)channel.Key);
         }
 
-        public void Play(int pitch, int channel)
+        public void Play(Pitch pitch, Instrument instrument)
         {
-            output.Send(MidiMessage.StartNote(pitch, 127, channel).RawData);
+            synth.Play(pitch, channels[instrument]);
         }
 
-        public void Stop(int pitch, int channel)
+        public void Stop(Pitch pitch, Instrument instrument)
         {
-            output.Send(MidiMessage.StopNote(pitch, 0, channel).RawData);
+            synth.Stop(pitch, channels[instrument]);
         }
 
         public IActorRef NewSpeaker()
@@ -36,8 +49,7 @@ namespace Synth
 
         public void Dispose()
         {
-            output.Close();
-            output.Dispose();
+            synth.Dispose();
         }
     }
 }
