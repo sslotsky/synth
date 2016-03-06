@@ -25,9 +25,16 @@ namespace Synth
 
             foreach (var note in notes)
             {
-                hub.Play(note.Pitch, channel);
-                Thread.Sleep(getDuration(note));
-                hub.Stop(note.Pitch, channel);
+                if (note.NoteName.Equals(NoteName.Rest))
+                {
+                    Thread.Sleep(getDuration(note));
+                }
+                else
+                {
+                    hub.Play(note.Pitch, channel);
+                    Thread.Sleep(getDuration(note));
+                    hub.Stop(note.Pitch, channel);
+                }
             }
         }
     }

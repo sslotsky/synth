@@ -45,5 +45,28 @@ namespace Test
             leftSpeaker.Tell(song);
             Thread.Sleep(numBeats * beatTime);
         }
+
+        [TestMethod]
+        public void TrackWithRests()
+        {
+            var hub = new AudioHub();
+            IActorRef leftSpeaker = hub.NewSpeaker();
+            var song = new Song();
+            song.Tempo = 120;
+            var notes = new List<Note>
+            {
+                new Note(NoteName.E, 1),
+                new Note(NoteName.Rest, 1),
+                new Note(NoteName.D, 1),
+                new Note(NoteName.Rest, 1),
+                new Note(NoteName.C, 4),
+            };
+            song.AddTrack(0, notes);
+
+            var numBeats = 8;
+            var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
+            leftSpeaker.Tell(song);
+            Thread.Sleep(numBeats * beatTime);
+        }
     }
 }
