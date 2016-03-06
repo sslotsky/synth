@@ -14,11 +14,8 @@ namespace Test
         [TestMethod]
         public void MaryHadALittleLamb()
         {
-            using (var hub = new AudioHub())
+            InitializeSong(120, (song, speaker) =>
             {
-                IActorRef leftSpeaker = hub.NewSpeaker();
-                var song = new Song();
-                song.Tempo = 120;
                 var notes = new List<Note>
                 {
                     new Note(NoteName.E, 1),
@@ -43,19 +40,16 @@ namespace Test
 
                 var numBeats = 8;
                 var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
-                leftSpeaker.Tell(song);
+                speaker.Tell(song);
                 Thread.Sleep(numBeats * beatTime);
-            }
+            });
         }
 
         [TestMethod]
         public void TrackWithRests()
         {
-            using (var hub = new AudioHub())
+            InitializeSong(120, (song, speaker) =>
             {
-                IActorRef leftSpeaker = hub.NewSpeaker();
-                var song = new Song();
-                song.Tempo = 120;
                 var notes = new List<Note>
                 {
                     new Note(NoteName.E, 1),
@@ -68,19 +62,16 @@ namespace Test
 
                 var numBeats = 8;
                 var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
-                leftSpeaker.Tell(song);
+                speaker.Tell(song);
                 Thread.Sleep(numBeats * beatTime);
-            }
+            });
         }
 
         [TestMethod]
         public void SyncopationTest()
         {
-            using (var hub = new AudioHub())
+            InitializeSong(120, (song, speaker) =>
             {
-                IActorRef leftSpeaker = hub.NewSpeaker();
-                var song = new Song();
-                song.Tempo = 120;
                 var notes = new List<Note>
                 {
                     new Note(NoteName.E, (Rational)3/2),
@@ -94,8 +85,19 @@ namespace Test
 
                 var numBeats = 5;
                 var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
-                leftSpeaker.Tell(song);
+                speaker.Tell(song);
                 Thread.Sleep(numBeats * beatTime);
+            });
+        }
+
+        private void InitializeSong(int tempo, Action<Song, IActorRef> block)
+        {
+            using (var hub = new AudioHub())
+            {
+                IActorRef speaker = hub.NewSpeaker();
+                var song = new Song();
+                song.Tempo = 120;
+                block(song, speaker);
             }
         }
     }
