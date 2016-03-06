@@ -72,5 +72,31 @@ namespace Test
                 Thread.Sleep(numBeats * beatTime);
             }
         }
+
+        [TestMethod]
+        public void SyncopationTest()
+        {
+            using (var hub = new AudioHub())
+            {
+                IActorRef leftSpeaker = hub.NewSpeaker();
+                var song = new Song();
+                song.Tempo = 120;
+                var notes = new List<Note>
+                {
+                    new Note(NoteName.E, (Rational)3/2),
+                    new Note(NoteName.E, 1),
+                    new Note(NoteName.E, 1),
+                    new Note(NoteName.E, (Rational)1/4),
+                    new Note(NoteName.E, (Rational)1/4),
+                    new Note(NoteName.E, (Rational)1/2)
+                };
+                song.AddTrack(0, notes);
+
+                var numBeats = 5;
+                var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
+                leftSpeaker.Tell(song);
+                Thread.Sleep(numBeats * beatTime);
+            }
+        }
     }
 }
