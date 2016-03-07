@@ -53,6 +53,7 @@
     <Compile Include="AudioHub.cs" />
     <Compile Include="Beat.cs" />
     <Compile Include="BeatFiller.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="Flat.cs" />
     <Compile Include="Instrument.cs" />
     <Compile Include="Musician.cs" />

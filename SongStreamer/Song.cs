@@ -23,10 +23,10 @@ namespace SongStreamer
             tracks.Add(hub.System.ActorOf(Props.Create(() => new Track(this, instrument, notes))));
         }
 
-        public void Play(AudioHub hub)
+        public void Play(Speaker speaker)
         {
             foreach (var track in tracks)
-                track.Tell(hub);
+                track.Tell(speaker);
         }
     }
 }

@@ -18,13 +18,13 @@ namespace SongStreamer
             this.song = song;
             this.instrument = instrument;
             FillBeats(notes);
-            Receive<AudioHub>(hub => Stream(hub));
+            Receive<Speaker>(speaker => Stream(speaker));
         }
 
-        public void Stream(AudioHub hub)
+        public void Stream(Speaker speaker)
         {
             var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
-            var musician = hub.NewMusician(song, instrument);
+            var musician = speaker.NewMusician(song, instrument);
 
             foreach (var beat in beats)
             {

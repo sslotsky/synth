@@ -8,14 +8,14 @@ namespace SongStreamer
     public class Musician : ReceiveActor
     {
         private int beatTime;
-        private AudioHub hub;
+        private Speaker speaker;
         private Instrument instrument;
 
-        public Musician(Song song, AudioHub hub, Instrument instrument)
+        public Musician(Song song, Speaker speaker, Instrument instrument)
         {
             beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
             this.instrument = instrument;
-            this.hub = hub;
+            this.speaker = speaker;
             Receive<Beat>(beat => beat.Notes.Count > 0, beat => Play(beat.Notes));
         }
 
@@ -32,9 +32,9 @@ namespace SongStreamer
                 }
                 else
                 {
-                    hub.Play(note.Pitch, instrument);
+                    speaker.Play(note.Pitch, instrument);
                     Thread.Sleep(getDuration(note));
-                    hub.Stop(note.Pitch, instrument);
+                    speaker.Stop(note.Pitch, instrument);
                 }
             }
         }

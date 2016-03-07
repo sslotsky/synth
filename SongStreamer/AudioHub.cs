@@ -32,9 +32,9 @@ namespace SongStreamer
                 synth.SetVoice(channel.Value, (int)channel.Key);
         }
 
-        public void Play(Pitch pitch, Instrument instrument)
+        public void Play(Pitch pitch, Instrument instrument, int volume)
         {
-            synth.Play(pitch, channels[instrument]);
+            synth.Play(pitch, channels[instrument], volume);
         }
 
         public void Stop(Pitch pitch, Instrument instrument)
@@ -45,11 +45,6 @@ namespace SongStreamer
         public IActorRef NewSpeaker()
         {
             return System.ActorOf(Props.Create(() => new Speaker(this)));
-        }
-
-        public IActorRef NewMusician(Song song, Instrument instrument)
-        {
-            return System.ActorOf(Props.Create(() => new Musician(song, this, instrument)));
         }
 
         public void Dispose()
