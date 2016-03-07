@@ -9,8 +9,6 @@ namespace Synth
 
         public IEnumerable<Beat> Beats { get { return beats; } }
 
-        //private Beat currentBeat { get { return beats.Last(); } }
-
         public BeatFiller()
         {
             beats = new List<Beat>();
@@ -25,7 +23,7 @@ namespace Synth
         {
             var beat = new Beat(offset);
             beats.Add(beat);
-            if (offset > 1)
+            if (offset >= 1)
             {
                 Fill(notes, offset - 1);
                 return;
@@ -38,7 +36,7 @@ namespace Synth
                 {
                     var newoffset = -beat.TimeRemaining;
 
-                    Fill(new Queue<Note>(notes), newoffset);
+                    Fill(notes, newoffset);
                     return;
                 }
 

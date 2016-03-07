@@ -8,24 +8,19 @@ namespace Synth
     {
         public int Tempo { get; set; }
 
-        private ActorSystem song;
+        private AudioHub hub;
 
         private List<IActorRef> tracks;
 
-        public Song()
+        public Song(AudioHub hub)
         {
-            song = ActorSystem.Create("song-" + Guid.NewGuid().ToString());
+            this.hub = hub;
             tracks = new List<IActorRef>();
         }
 
         public void AddTrack(Instrument instrument, List<Note> notes)
         {
-            tracks.Add(song.ActorOf(Props.Create(() => new Track(this, instrument, notes))));
-        }
-
-        public IActorRef NewMusician(AudioHub hub, Instrument instrument)
-        {
-            return song.ActorOf(Props.Create(() => new Musician(this, hub, instrument)));
+            tracks.Add(hub.System.ActorOf(Props.Create(() => new Track(this, instrument, notes))));
         }
 
         public void Play(AudioHub hub)

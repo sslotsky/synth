@@ -24,7 +24,7 @@ namespace Synth
         public void Stream(AudioHub hub)
         {
             var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
-            var musician = song.NewMusician(hub, instrument);
+            var musician = hub.NewMusician(song, instrument);
 
             foreach (var beat in beats)
             {
@@ -33,7 +33,7 @@ namespace Synth
             }
         }
 
-        public void FillBeats(List<Note> notes)
+        private void FillBeats(List<Note> notes)
         {
             var filler = new BeatFiller();
             filler.Fill(notes);

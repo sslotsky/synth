@@ -22,11 +22,11 @@ namespace Synth
 
         private Synthesizer synth;
 
-        public ActorSystem Speakers { get; private set; }
+        public ActorSystem System { get; private set; }
 
         public AudioHub()
         {
-            Speakers = ActorSystem.Create("speakers");
+            System = ActorSystem.Create("speakers");
             synth = new Synthesizer();
             foreach (var channel in channels)
                 synth.SetVoice(channel.Value, (int)channel.Key);
@@ -44,7 +44,12 @@ namespace Synth
 
         public IActorRef NewSpeaker()
         {
-            return Speakers.ActorOf(Props.Create(() => new Speaker(this)));
+            return System.ActorOf(Props.Create(() => new Speaker(this)));
+        }
+
+        public IActorRef NewMusician(Song song, Instrument instrument)
+        {
+            return System.ActorOf(Props.Create(() => new Musician(song, this, instrument)));
         }
 
         public void Dispose()

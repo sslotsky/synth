@@ -95,7 +95,7 @@ namespace Test
             using (var hub = new AudioHub())
             {
                 IActorRef speaker = hub.NewSpeaker();
-                var song = new Song();
+                var song = new Song(hub);
                 song.Tempo = 120;
                 block(song, speaker);
             }
