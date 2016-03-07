@@ -13,7 +13,7 @@ namespace SongStreamer
 
         public Musician(Song song, Speaker speaker, Instrument instrument)
         {
-            beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
+            beatTime = song.BeatTime;
             this.instrument = instrument;
             this.speaker = speaker;
             Receive<Beat>(beat => beat.Notes.Count > 0, beat => Play(beat.Notes));
@@ -21,19 +21,16 @@ namespace SongStreamer
 
         public void Play(List<Note> notes)
         {
-            Func<Note, int> getDuration = n =>
-                (int)Math.Floor(beatTime * (decimal)n.Duration.Numerator / (decimal)n.Duration.Denominator);
-
             foreach (var note in notes)
             {
                 if (note.NoteName.Equals(NoteName.Rest))
                 {
-                    Thread.Sleep(getDuration(note));
+                    Thread.Sleep(note.RelativeDuration(beatTime));
                 }
                 else
                 {
                     speaker.Play(note.Pitch, instrument);
-                    Thread.Sleep(getDuration(note));
+                    Thread.Sleep(note.RelativeDuration(beatTime));
                     speaker.Stop(note.Pitch, instrument);
                 }
             }

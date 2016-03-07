@@ -8,6 +8,8 @@ namespace SongStreamer
     {
         public int Tempo { get; set; }
 
+        public int BeatTime { get { return (int)Math.Round(1000 / (Tempo / 60.0)); } }
+
         private AudioHub hub;
 
         private List<IActorRef> tracks;

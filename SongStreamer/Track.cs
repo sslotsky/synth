@@ -23,13 +23,12 @@ namespace SongStreamer
 
         public void Stream(Speaker speaker)
         {
-            var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
             var musician = speaker.NewMusician(song, instrument);
 
             foreach (var beat in beats)
             {
                 musician.Tell(beat);
-                Thread.Sleep(beatTime);
+                Thread.Sleep(song.BeatTime);
             }
         }
 

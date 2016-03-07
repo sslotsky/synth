@@ -1,4 +1,5 @@
 ﻿using Rationals;
+using System;
 using System.Collections.Generic;
 
 namespace SongStreamer
@@ -19,6 +20,11 @@ namespace SongStreamer
         public NoteName NoteName { get; private set; }
 
         public Rational Duration { get; set; }
+
+        public int RelativeDuration(int beatTime)
+        {
+            return (int)Math.Floor(beatTime * (decimal)Duration.Numerator / (decimal)Duration.Denominator);
+        }
 
         public Note(NoteName noteName, Rational duration)
         {
