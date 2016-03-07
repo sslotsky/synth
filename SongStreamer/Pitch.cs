@@ -1,5 +1,5 @@
 ﻿
-namespace Synth
+namespace SongStreamer
 {
     public class Pitch
     {

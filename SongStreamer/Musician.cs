@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Synth
+namespace SongStreamer
 {
     public class Musician : ReceiveActor
     {
@@ -16,7 +16,7 @@ namespace Synth
             beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
             this.instrument = instrument;
             this.hub = hub;
-            Receive<Beat>(beat => Play(beat.Notes));
+            Receive<Beat>(beat => beat.Notes.Count > 0, beat => Play(beat.Notes));
         }
 
         public void Play(List<Note> notes)

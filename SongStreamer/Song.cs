@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Synth
+namespace SongStreamer
 {
     public class Song
     {

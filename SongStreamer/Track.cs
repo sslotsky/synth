@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace Synth
+namespace SongStreamer
 {
     public class Track : ReceiveActor
     {

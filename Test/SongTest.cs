@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Synth;
+using SongStreamer;
 using System.Collections.Generic;
 using System.Threading;
 using Rationals;

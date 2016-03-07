@@ -1,6 +1,6 @@
 ﻿using Akka.Actor;
 
-namespace Synth
+namespace SongStreamer
 {
     public class Speaker : ReceiveActor
     {

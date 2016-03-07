@@ -1,9 +1,9 @@
 ﻿using Akka.Actor;
-using NAudio.Midi;
+using AudioDevices;
 using System;
 using System.Collections.Generic;
 
-namespace Synth
+namespace SongStreamer
 {
     public class AudioHub : IDisposable
     {
@@ -20,14 +20,14 @@ namespace Synth
             { Instrument.Vibes, 9 }
         };
 
-        private Synthesizer synth;
+        private MidiSynthesizer synth;
 
         public ActorSystem System { get; private set; }
 
         public AudioHub()
         {
             System = ActorSystem.Create("speakers");
-            synth = new Synthesizer();
+            synth = new MidiSynthesizer();
             foreach (var channel in channels)
                 synth.SetVoice(channel.Value, (int)channel.Key);
         }
@@ -54,6 +54,7 @@ namespace Synth
 
         public void Dispose()
         {
+            System.Terminate();
             synth.Dispose();
         }
     }

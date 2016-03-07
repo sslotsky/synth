@@ -1,7 +1,7 @@
 ﻿using Rationals;
 using System.Collections.Generic;
 
-namespace Synth
+namespace SongStreamer
 {
     public class Note
     {

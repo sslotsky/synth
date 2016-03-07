@@ -1,6 +1,6 @@
 ﻿using Rationals;
 
-namespace Synth
+namespace SongStreamer
 {
     public class Flat : Note
     {

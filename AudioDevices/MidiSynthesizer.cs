@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Synth
+namespace AudioDevices
 {
-    public class Synthesizer : IDisposable
+    public class MidiSynthesizer : IDisposable
     {
         private MidiOut output;
 
-        public Synthesizer()
+        public MidiSynthesizer()
         {
             output = new MidiOut(0);
         }
