@@ -63,6 +63,7 @@
     <Compile Include="OctaveUp.cs" />
     <Compile Include="Pitch.cs" />
     <Compile Include="RationalExtensions.cs" />
+    <Compile Include="Repeat.cs" />
     <Compile Include="Sharp.cs" />
     <Compile Include="Song.cs" />
     <Compile Include="Speaker.cs" />
