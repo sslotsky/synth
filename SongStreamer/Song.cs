@@ -14,6 +14,8 @@ namespace SongStreamer
 
         private List<IActorRef> tracks;
 
+        public bool Stopped { get; private set; }
+
         public Song(AudioHub hub)
         {
             this.hub = hub;
@@ -29,6 +31,11 @@ namespace SongStreamer
         {
             foreach (var track in tracks)
                 track.Tell(speaker);
+        }
+
+        public void Stop()
+        {
+            Stopped = true;
         }
     }
 }

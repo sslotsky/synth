@@ -69,6 +69,30 @@ namespace Test
         }
 
         [TestMethod]
+        public void StopTest()
+        {
+            InitializeSong(120, (song, speaker) =>
+            {
+                var notes = new List<Note>
+                {
+                    new Note(NoteName.E, 1),
+                    new Note(NoteName.Rest, 1),
+                    new Note(NoteName.D, 1),
+                    new Note(NoteName.Rest, 1),
+                    new Note(NoteName.C, 4),
+                };
+                song.AddTrack(Instrument.Flute, notes);
+
+                var numBeats = 8;
+                var beatTime = (int)Math.Round(1000 / (song.Tempo / 60.0));
+                speaker.Tell(song);
+                Thread.Sleep(numBeats * beatTime / 8);
+                song.Stop();
+                Thread.Sleep(numBeats * beatTime);
+            });
+        }
+
+        [TestMethod]
         public void RepeatTest()
         {
             InitializeSong(220, (song, speaker) =>
@@ -76,7 +100,8 @@ namespace Test
                 var notes = new List<Note>
                 {
                     new Note(NoteName.A, 1),
-                    new Note(NoteName.C, 1),
+                    new Note(NoteName.C, (Rational)1/2),
+                    new Note(NoteName.Rest, (Rational)1/2),
                     new Note(NoteName.C, 1)
                 };
                 var repeat = new Repeat(notes);
@@ -84,10 +109,12 @@ namespace Test
                 var moreNotes = new List<Note>
                 {
                     new Note(NoteName.G, 1),
-                    new Note(NoteName.C, 1),
+                    new Note(NoteName.C, (Rational)1/2),
+                    new Note(NoteName.Rest, (Rational)1/2),
                     new Note(NoteName.C, 1),
                     new Note(NoteName.G, 1).Sharp,
-                    new Note(NoteName.C, 1),
+                    new Note(NoteName.C, (Rational)1/2),
+                    new Note(NoteName.Rest, (Rational)1/2),
                     new Note(NoteName.C, 1)
                 };
 
@@ -98,7 +125,8 @@ namespace Test
                 var harmony = new List<Note>
                 {
                     new Note(NoteName.Rest, 1),
-                    new Note(NoteName.E, 1),
+                    new Note(NoteName.E, (Rational)1/2),
+                    new Note(NoteName.Rest, (Rational)1/2),
                     new Note(NoteName.E, 1)
                 };
 

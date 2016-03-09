@@ -27,7 +27,8 @@ namespace SongStreamer
 
             foreach (var beat in beats)
             {
-                musician.Tell(beat);
+                if (!song.Stopped)
+                    musician.Tell(beat);
                 Thread.Sleep(song.BeatTime);
             }
         }
